@@ -15,5 +15,6 @@ void contrasenyaOlvidada(void);
 void menu(void);
 void genero(void);
 void datosUsuario(void);
+void alquilarPelicula(void);
 
 #endif /* INTERFACES_INTERFACES_H_ */

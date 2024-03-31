@@ -100,7 +100,7 @@ void menu(void)
 	switch (optionMenu)
 	{
 	case 1:
-		genero(); //de esta ventana irá a peliculas de dicho genero para luego gestionar el alquiler.
+		alquilarPelicula(); //de esta ventana irá a peliculas de dicho genero para luego gestionar el alquiler.
 		break;
 	case 2:
 		genero(); // En vez de ir a la ventana de genero debería ir a la ventana propia de alquileres.
@@ -151,7 +151,7 @@ void alquilarPelicula(void)
 				//Apunta al genero
 				genero = strtok(NULL, ";");
 
-				if(strcmp(genero, "Accion") == 0)
+				if(strcmp(genero, "Acción") == 0)
 				{
 					printf("%d.%s", numPelicula, pelicula);
 					numPelicula++;
