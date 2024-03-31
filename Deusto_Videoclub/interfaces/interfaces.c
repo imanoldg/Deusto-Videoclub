@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "interfaces.h"
 #include <string.h>
+#include <stdlib.h>
 
 void inicio(void)
 {
@@ -107,7 +108,7 @@ void menu(void)
 		alquilarPelicula(); //de esta ventana irá a peliculas de dicho genero para luego gestionar el alquiler.
 		break;
 	case 2:
-		genero(); // En vez de ir a la ventana de genero debería ir a la ventana propia de alquileres.
+		//genero(); // En vez de ir a la ventana de genero debería ir a la ventana propia de alquileres.
 		break;
 	case 3:
 		datosUsuario();
@@ -131,6 +132,7 @@ void alquilarPelicula(void)
 	char linea[1000];
 	char *pelicula;
 	char *genero;
+	char titulo;
 
 	int seleccion;
 	int numPelicula = 1;
@@ -142,12 +144,13 @@ void alquilarPelicula(void)
 
 	scanf("\n%i", &seleccion);
 
+	printf("\nPELICULAS\n=======================================\n");
 	//FORMATO DEL CSV: Nombre,duración,nota,género, sinopsis
 	switch(seleccion)
 	{
 	case 1:
-			printf("\nPELICULAS\n=======================================\n");
-			//Cargar las peliculas de accion
+			
+			//Cargar las peliculas de ACCION
 			while(fgets(linea, sizeof(linea), f)){
 				pelicula = strtok(linea, ";");
 				//Apunta a la duracion
@@ -162,49 +165,123 @@ void alquilarPelicula(void)
 					printf("%d.%s\n", numPelicula, pelicula);
 					numPelicula++;
 				}
+
+				printf("\nIntroduce el titulo de la pelicula: ");
+				scanf("\n%s", &titulo);
+
+				printf("\nALQUILER: %s\n=======================================");
 			}
-	}
-}
 
-void genero(void)
-{
-	system("cls");
-	int opcionGenero;
-	printf("\n=======================================\nGENERO\n=======================================\n\n");
-
-	printf("\n1.Accion\n2.Drama\n3.Ciencia Ficcion\n4.Clásicas\n5.Comedia\n6.Terror\n7.Romanticas");
-	printf("\nIntroducir opcion: ");
-	
-	scanf("%i", &opcionGenero);
-
-	switch (opcionGenero)
-	{
-	case 1:
-		// listado peliculas Acción.
-		break;
 	case 2:
-		// listado peliculas Drama.
-		break;
-	case 3:
-		// listado peliculas Ciencia ficción.
-		break;
-	case 4:
-		// listado peliculas Clásicas.
-		break;
-	case 5:
-		// listado peliculas Comedia.
-		break;
-	case 6:
-		// listado peliculas Terror.
-		break;
-	case 7:
-		// listado peliculas Románticas.
-		break;
-	default:
-		break;
-	}
+			
+			//Cargar las peliculas de DRAMA
+			while(fgets(linea, sizeof(linea), f)){
+				pelicula = strtok(linea, ";");
+				//Apunta a la duracion
+				genero = strtok(NULL, ";");
+				//Apunta a la nota
+				genero = strtok(NULL, ";");
+				//Apunta al genero
+				genero = strtok(NULL, ";");
 
+				if(strcmp(genero, "Drama") == 0)
+				{
+					printf("%d.%s\n", numPelicula, pelicula);
+					numPelicula++;
+				}
+			}
+
+	case 3:
+			//Cargar las peliculas de CIENCIA FICCION
+			while(fgets(linea, sizeof(linea), f)){
+				pelicula = strtok(linea, ";");
+				//Apunta a la duracion
+				genero = strtok(NULL, ";");
+				//Apunta a la nota
+				genero = strtok(NULL, ";");
+				//Apunta al genero
+				genero = strtok(NULL, ";");
+
+				if(strcmp(genero, "Ciencia Ficción") == 0)
+				{
+					printf("%d.%s\n", numPelicula, pelicula);
+					numPelicula++;
+				}
+			}	
+	case 4:
+			//Cargar las peliculas CLASICAS
+			while(fgets(linea, sizeof(linea), f)){
+				pelicula = strtok(linea, ";");
+				//Apunta a la duracion
+				genero = strtok(NULL, ";");
+				//Apunta a la nota
+				genero = strtok(NULL, ";");
+				//Apunta al genero
+				genero = strtok(NULL, ";");
+
+				if(strcmp(genero, "Clásica") == 0)
+				{
+					printf("%d.%s\n", numPelicula, pelicula);
+					numPelicula++;
+				}
+			}
+
+	case 5:
+			//Cargar las peliculas de COMEDIA
+			while(fgets(linea, sizeof(linea), f)){
+				pelicula = strtok(linea, ";");
+				//Apunta a la duracion
+				genero = strtok(NULL, ";");
+				//Apunta a la nota
+				genero = strtok(NULL, ";");
+				//Apunta al genero
+				genero = strtok(NULL, ";");
+
+				if(strcmp(genero, "Comedia") == 0)
+				{
+					printf("%d.%s\n", numPelicula, pelicula);
+					numPelicula++;
+				}
+			}
+	case 6:
+			//Cargar las peliculas de TERROR
+			while(fgets(linea, sizeof(linea), f)){
+				pelicula = strtok(linea, ";");
+				//Apunta a la duracion
+				genero = strtok(NULL, ";");
+				//Apunta a la nota
+				genero = strtok(NULL, ";");
+				//Apunta al genero
+				genero = strtok(NULL, ";");
+
+				if(strcmp(genero, "Terror") == 0)
+				{
+					printf("%d.%s\n", numPelicula, pelicula);
+					numPelicula++;
+				}
+			}
+	case 7:
+			//Cargar las peliculas ROMANTICAS
+			while(fgets(linea, sizeof(linea), f)){
+				pelicula = strtok(linea, ";");
+				//Apunta a la duracion
+				genero = strtok(NULL, ";");
+				//Apunta a la nota
+				genero = strtok(NULL, ";");
+				//Apunta al genero
+				genero = strtok(NULL, ";");
+
+				if(strcmp(genero, "Romántica") == 0)
+				{
+					printf("%d.%s\n", numPelicula, pelicula);
+					numPelicula++;
+				}
+			}
+
+	default: printf("Opcion no valida");
+	}
 }
+
 
 void datosUsuario(void)
 {
