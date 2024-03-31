@@ -1,0 +1,401 @@
+--
+-- Archivo generado con SQLiteStudio v3.4.4 el do. mar. 31 19:22:05 2024
+--
+-- Codificación de texto usada: System
+--
+PRAGMA foreign_keys = off;
+BEGIN TRANSACTION;
+
+-- Tabla: ALQUILER
+CREATE TABLE IF NOT EXISTS ALQUILER (
+    ID_ALQUILER           INTEGER   PRIMARY KEY
+                                    NOT NULL,
+    Nom_peli              TEXT (30) NOT NULL,
+    Duracion_alquiler_min INTEGER   NOT NULL,
+    DNI                   INTEGER   REFERENCES USUARIO (DNI) 
+                                    NOT NULL
+);
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         1,
+                         'Wonka',
+                         90,
+                         79117113
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         2,
+                         'Piratas del Caribe',
+                         120,
+                         79117113
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         3,
+                         'Harry Potter y la piedra filosofal',
+                         152,
+                         79117113
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         4,
+                         'Inception',
+                         148,
+                         82146598
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         5,
+                         'The Matrix',
+                         136,
+                         82146598
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         6,
+                         'Avengers: Endgame',
+                         181,
+                         82146598
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         7,
+                         'Titanic',
+                         195,
+                         63478952
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         8,
+                         'The Notebook',
+                         123,
+                         63478952
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         9,
+                         'La La Land',
+                         128,
+                         63478952
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         16,
+                         'The Lord of the Rings: The Fellowship of the Ring',
+                         178,
+                         94512378
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         17,
+                         'The Silence of the Lambs',
+                         118,
+                         94512378
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         18,
+                         'Braveheart',
+                         177,
+                         94512378
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         19,
+                         'Inglourious Basterds',
+                         153,
+                         53698741
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         20,
+                         'The Departed',
+                         151,
+                         53698741
+                     );
+
+INSERT INTO ALQUILER (
+                         ID_ALQUILER,
+                         Nom_peli,
+                         Duracion_alquiler_min,
+                         DNI
+                     )
+                     VALUES (
+                         21,
+                         'Good Will Hunting',
+                         126,
+                         53698741
+                     );
+
+
+-- Tabla: GENERO
+CREATE TABLE IF NOT EXISTS GENERO (
+    ID_GENERO     INTEGER PRIMARY KEY
+                          NOT NULL,
+    Nombre_Genero TEXT
+);
+
+INSERT INTO GENERO (
+                       ID_GENERO,
+                       Nombre_Genero
+                   )
+                   VALUES (
+                       1,
+                       'Masculino'
+                   );
+
+INSERT INTO GENERO (
+                       ID_GENERO,
+                       Nombre_Genero
+                   )
+                   VALUES (
+                       2,
+                       'Femenino'
+                   );
+
+
+-- Tabla: PAGO
+CREATE TABLE IF NOT EXISTS PAGO (
+    DNI       INTEGER REFERENCES USUARIO (DNI) 
+                      NOT NULL,
+    N_TARJETA         REFERENCES TARJETA (N_TARJETA) 
+                      NOT NULL
+);
+
+
+-- Tabla: TARJETA
+CREATE TABLE IF NOT EXISTS TARJETA (
+    N_TARJETA       INTEGER   PRIMARY KEY,
+    Titular         TEXT (40),
+    Fecha_Caducidad DATE
+);
+
+
+-- Tabla: USUARIO
+CREATE TABLE IF NOT EXISTS USUARIO (
+    DNI        INTEGER   PRIMARY KEY
+                         NOT NULL,
+    Nombre     TEXT (20) NOT NULL,
+    Apellido   TEXT (20) NOT NULL,
+    Email      TEXT (40) NOT NULL,
+    Telefono   INTEGER   NOT NULL,
+    Usuario    TEXT      NOT NULL,
+    Password   TEXT      NOT NULL,
+    Genero     INTEGER   NOT NULL
+                         REFERENCES GENERO (ID_GENERO),
+    Fecha_ncto DATE      NOT NULL,
+    N_TARJETA  INTEGER   REFERENCES TARJETA (N_TARJETA) 
+);
+
+INSERT INTO USUARIO (
+                        DNI,
+                        Nombre,
+                        Apellido,
+                        Email,
+                        Telefono,
+                        Usuario,
+                        Password,
+                        Genero,
+                        Fecha_ncto,
+                        N_TARJETA
+                    )
+                    VALUES (
+                        53698741,
+                        'Juan',
+                        'Sánchez',
+                        'juan.s@opendeusto.es',
+                        656443399,
+                        'Juan',
+                        'Juan',
+                        1,
+                        '1993-09-10',
+                        NULL
+                    );
+
+INSERT INTO USUARIO (
+                        DNI,
+                        Nombre,
+                        Apellido,
+                        Email,
+                        Telefono,
+                        Usuario,
+                        Password,
+                        Genero,
+                        Fecha_ncto,
+                        N_TARJETA
+                    )
+                    VALUES (
+                        63478952,
+                        'Pedro',
+                        'López',
+                        'pedro.l@opendeusto.es',
+                        645338855,
+                        'Pedro',
+                        'Pedro',
+                        1,
+                        '1995-11-03',
+                        NULL
+                    );
+
+INSERT INTO USUARIO (
+                        DNI,
+                        Nombre,
+                        Apellido,
+                        Email,
+                        Telefono,
+                        Usuario,
+                        Password,
+                        Genero,
+                        Fecha_ncto,
+                        N_TARJETA
+                    )
+                    VALUES (
+                        79117113,
+                        'Carlos',
+                        'Garcia',
+                        'carlos.g@opendeusto.es',
+                        670223339,
+                        'Carlos',
+                        'Carlos',
+                        1,
+                        '2004-02-28',
+                        NULL
+                    );
+
+INSERT INTO USUARIO (
+                        DNI,
+                        Nombre,
+                        Apellido,
+                        Email,
+                        Telefono,
+                        Usuario,
+                        Password,
+                        Genero,
+                        Fecha_ncto,
+                        N_TARJETA
+                    )
+                    VALUES (
+                        82146598,
+                        'Ana',
+                        'Martínez',
+                        'ana.m@opendeusto.es',
+                        678554422,
+                        'Ana',
+                        'Ana',
+                        2,
+                        '1998-07-15',
+                        NULL
+                    );
+
+INSERT INTO USUARIO (
+                        DNI,
+                        Nombre,
+                        Apellido,
+                        Email,
+                        Telefono,
+                        Usuario,
+                        Password,
+                        Genero,
+                        Fecha_ncto,
+                        N_TARJETA
+                    )
+                    VALUES (
+                        94512378,
+                        'Laura',
+                        'Fernández',
+                        'laura.f@opendeusto.es',
+                        679887766,
+                        'Laura',
+                        'Laura',
+                        2,
+                        '2000-05-20',
+                        NULL
+                    );
+
+
+COMMIT TRANSACTION;
+PRAGMA foreign_keys = on;
