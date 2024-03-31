@@ -10,6 +10,6 @@
 int main(void)
 {
 	inicio();
-	iniciarSesion();
+	
 	return 0;
 }

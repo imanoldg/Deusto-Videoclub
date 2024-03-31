@@ -11,8 +11,9 @@
 void inicio(void);
 void iniciarSesion(void);
 void registrarUsuario(void);
-void contraseñaOlvidada(void);
+void contrasenyaOlvidada(void);
 void menu(void);
-void extender(void);
+void genero(void);
+void datosUsuario(void);
 
 #endif /* INTERFACES_INTERFACES_H_ */
