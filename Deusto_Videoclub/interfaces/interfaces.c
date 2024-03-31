@@ -40,6 +40,7 @@ void inicio(void)
 
 void iniciarSesion(void)
 {
+	system("cls");
 	char usuario[10];
 	char password[10];
 
@@ -62,6 +63,7 @@ void iniciarSesion(void)
 
 void registrarUsuario(void)
 {
+	system("cls");
 	printf("\nREGISTRO DE SESIÓN\n=======================================");
 
 	printf("Introducir Nombre: \n");
@@ -79,6 +81,7 @@ void registrarUsuario(void)
 
 void contrasenyaOlvidada(void)
 {
+	system("cls");
 	printf("\nCONTRASEÑA OLVIDADA\n=======================================\n");
 
 	printf("Introducir DNI: \n");
@@ -88,6 +91,7 @@ void contrasenyaOlvidada(void)
 
 void menu(void)
 {
+	system("cls");
 	int optionMenu;
 	printf("\n=======================================\nBIENVENIDO AL MENU PRINCIPAL\n=======================================\n\n");
 
@@ -122,6 +126,7 @@ void menu(void)
 
 void alquilarPelicula(void)
 {
+	system("cls");
 	FILE *f = fopen("Peliculas.csv", "r");
 	char linea[1000];
 	char *pelicula;
@@ -163,6 +168,7 @@ void alquilarPelicula(void)
 
 void genero(void)
 {
+	system("cls");
 	int opcionGenero;
 	printf("\n=======================================\nGENERO\n=======================================\n\n");
 
@@ -202,6 +208,7 @@ void genero(void)
 
 void datosUsuario(void)
 {
+	system("cls");
 	int opcionDatosUsuario;
 	printf("\n=======================================\nDATOS USUARIO\n=======================================\n\n");
 	printf("\nNombre: \nApellido: \nDNI: \nEmail: \nNº Tarjeta: \nGenero(H/M): \nFecha Nacimiento: \nUsuario: \nPuntos: \n");
