@@ -130,17 +130,18 @@ void alquilarPelicula(void)
 	int seleccion;
 	int numPelicula = 1;
 
-	printf("\nGENERO\n=======================================");
-	printf("1.Accion\n2.Drama\n3.Ciencia Ficcion\n4.Clasicas\n5.Comedia\n6.Terror\n7.Romanticas");
+	printf("\nGENERO\n=======================================\n");
+	printf("\n1.Accion\n2.Drama\n3.Ciencia Ficcion\n4.Clasicas\n5.Comedia\n6.Terror\n7.Romanticas");
 
 	printf("\nIntroducir opcion: ");
 
-	scanf("%i", &seleccion);
+	scanf("\n%i", &seleccion);
 
 	//FORMATO DEL CSV: Nombre,duración,nota,género, sinopsis
 	switch(seleccion)
 	{
 	case 1:
+			printf("\nPELICULAS\n=======================================\n");
 			//Cargar las peliculas de accion
 			while(fgets(linea, sizeof(linea), f)){
 				pelicula = strtok(linea, ";");
@@ -153,7 +154,7 @@ void alquilarPelicula(void)
 
 				if(strcmp(genero, "Acción") == 0)
 				{
-					printf("%d.%s", numPelicula, pelicula);
+					printf("%d.%s\n", numPelicula, pelicula);
 					numPelicula++;
 				}
 			}
