@@ -5,6 +5,9 @@
  *      Author: ima.dominguez
  */
 
+#include <stdio.h>
+#include <string.h>
+
 void inicio(void)
 {
 	printf("=======================================\n             VIDEOCLUB\n=======================================\n\n");
@@ -56,7 +59,42 @@ void menu(void)
 
 void alquilarPelicula(void)
 {
+	FILE *f = fopen("Peliculas.csv", "r");
+	char linea[1000];
+	char *pelicula;
+	char *genero;
 
+	int seleccion;
+	int numPelicula = 1;
+
+	printf("\nGENERO\n=======================================");
+	printf("1.Accion\n2.Drama\n3.Ciencia Ficcion\n4.Clasicas\n5.Comedia\n6.Terror\n7.Romanticas");
+
+	printf("\nIntroducir opcion: ");
+
+	scanf("%i", &seleccion);
+
+	//FORMATO DEL CSV: Nombre,duración,nota,género, sinopsis
+	switch(seleccion)
+	{
+	case 1:
+			//Cargar las peliculas de accion
+			while(fgets(linea, sizeof(linea), f)){
+				pelicula = strtok(linea, ";");
+				//Apunta a la duracion
+				genero = strtok(NULL, ";");
+				//Apunta a la nota
+				genero = strtok(NULL, ";");
+				//Apunta al genero
+				genero = strtok(NULL, ";");
+
+				if(strcmp(genero, "Accion") == 0)
+				{
+					printf("%d.%s", numPelicula, pelicula);
+					numPelicula++;
+				}
+			}
+	}
 }
 
 void extender(void)
