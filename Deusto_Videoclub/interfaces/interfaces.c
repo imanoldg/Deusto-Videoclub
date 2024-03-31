@@ -54,6 +54,11 @@ void menu(void)
 
 }
 
+void alquilarPelicula(void)
+{
+
+}
+
 void extender(void)
 {
 	printf("\nLISTA ALQUILERES\n=======================================");
