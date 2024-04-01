@@ -12,9 +12,10 @@ void inicio(void);
 void iniciarSesion(void);
 void registrarUsuario(void);
 void contrasenyaOlvidada(void);
-void menu(void);
+void menu(char usuario[]);
 void genero(void);
-void datosUsuario(void);
-void alquilarPelicula(void);
+void datosUsuario(char usuario[]);
+void alquilarPelicula(char usuario[]);
+void guardarAlquiler(char usuario[], char pelicula[], int duracion);
 
 #endif /* INTERFACES_INTERFACES_H_ */

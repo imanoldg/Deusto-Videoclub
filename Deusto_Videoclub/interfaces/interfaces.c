@@ -9,7 +9,7 @@
 #include "interfaces.h"
 #include <string.h>
 #include <stdlib.h>
-
+//FUNCION DEL INICIO DEL PROGRAMA
 void inicio(void)
 {
 	int option;
@@ -38,7 +38,7 @@ void inicio(void)
 		break;
 	}
 }
-
+//FUNCION PARA INICIAR SESION
 void iniciarSesion(void)
 {
 	system("cls");
@@ -48,20 +48,20 @@ void iniciarSesion(void)
 	printf("\n=======================================\nINICIO DE SESION\n=======================================\n\n");
 
 	printf("Introducir Usuario: ");
-	scanf("%s", &usuario);
+	scanf("%s", usuario);
 
 	printf("Introducir Contraseña: ");
-	scanf("%s", &password);
+	scanf("%s", password);
 
 	if ((strcmp(usuario, "pomodoro") == 0) && (strcmp(password, "liso") == 0))
 	{
-		menu();
+		menu(usuario);
 	}else
 	{
 		printf("usuario o contraseña incorrectos");
 	}
 }
-
+//FUNCION PARA REGISTRAR UN USUARIO NUEVO
 void registrarUsuario(void)
 {
 	system("cls");
@@ -79,7 +79,7 @@ void registrarUsuario(void)
 	printf("Introducir Usuario: \n");
 	printf("Introducir Contraseña: \n");
 }
-
+//FUNCION PARA CAMBIAR LA CONTRASEÑA DEL USUARIO
 void contrasenyaOlvidada(void)
 {
 	system("cls");
@@ -89,8 +89,8 @@ void contrasenyaOlvidada(void)
 	printf("Introducir Contraseña Nueva: \n");
 }
 
-
-void menu(void)
+//FUNCION QUE MUESTRA EL MENU PRINCIPAL
+void menu(char usuario[])
 {
 	system("cls");
 	int optionMenu;
@@ -105,13 +105,13 @@ void menu(void)
 	switch (optionMenu)
 	{
 	case 1:
-		alquilarPelicula(); //de esta ventana irá a peliculas de dicho genero para luego gestionar el alquiler.
+		alquilarPelicula(usuario); //de esta ventana irá a peliculas de dicho genero para luego gestionar el alquiler.
 		break;
 	case 2:
 		//genero(); // En vez de ir a la ventana de genero debería ir a la ventana propia de alquileres.
 		break;
 	case 3:
-		datosUsuario();
+		datosUsuario(usuario);
 		break;
 	case 4:
 
@@ -125,7 +125,8 @@ void menu(void)
 
 }
 
-void alquilarPelicula(void)
+//FUNCION PARA ALQUILAR PELICULA
+void alquilarPelicula(char usuario[])
 {
 	system("cls");
 	FILE *f = fopen("Peliculas.csv", "r");
@@ -133,8 +134,11 @@ void alquilarPelicula(void)
 	char *pelicula;
 	char *genero;
 	char titulo;
+	char **listaPelis;
+	listaPelis = (char**)malloc(sizeof(char*)*20);
 
 	int seleccion;
+	int *duracionAlquiler;
 	int numPelicula = 1;
 
 	printf("\nGENERO\n=======================================\n");
@@ -162,15 +166,27 @@ void alquilarPelicula(void)
 
 				if(strcmp(genero, "Acción") == 0)
 				{
-					printf("%d.%s\n", numPelicula, pelicula);
+					printf("%d.%s", numPelicula, pelicula);
+					//strcpy(listaPelis[numPelicula], pelicula);
 					numPelicula++;
 				}
-
-				printf("\nIntroduce el titulo de la pelicula: ");
-				scanf("\n%s", &titulo);
-
-				printf("\nALQUILER: %s\n=======================================");
+				
 			}
+
+			
+			printf("\nIntroduce el titulo de la pelicula: ");
+			scanf("\n%s", &titulo);
+
+			
+
+			printf("\nALQUILER: %s\n=======================================");
+			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
+			printf("Introduce una opcion: ");
+			scanf("\n%i", &duracionAlquiler);
+			printf("\n¡Gracias por alquilar!\n");
+			//Llamada a la funcion para guardar el alquiler en la base de datos
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
+			
 
 	case 2:
 			
@@ -207,7 +223,20 @@ void alquilarPelicula(void)
 					printf("%d.%s\n", numPelicula, pelicula);
 					numPelicula++;
 				}
-			}	
+			}
+
+			printf("\nIntroduce el titulo de la pelicula: ");
+			scanf("\n%s", &titulo);
+
+			
+
+			printf("\nALQUILER: %s\n=======================================");
+			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
+			printf("Introduce una opcion: ");
+			scanf("\n%i", &duracionAlquiler);
+			printf("\n¡Gracias por alquilar!\n");
+			//Llamada a la funcion para guardar el alquiler en la base de datos
+			guardarAlquiler(usuario, titulo, duracionAlquiler);	
 	case 4:
 			//Cargar las peliculas CLASICAS
 			while(fgets(linea, sizeof(linea), f)){
@@ -226,6 +255,19 @@ void alquilarPelicula(void)
 				}
 			}
 
+			printf("\nIntroduce el titulo de la pelicula: ");
+			scanf("\n%s", &titulo);
+
+			
+
+			printf("\nALQUILER: %s\n=======================================");
+			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
+			printf("Introduce una opcion: ");
+			scanf("\n%i", &duracionAlquiler);
+			printf("\n¡Gracias por alquilar!\n");
+			//Llamada a la funcion para guardar el alquiler en la base de datos
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
+
 	case 5:
 			//Cargar las peliculas de COMEDIA
 			while(fgets(linea, sizeof(linea), f)){
@@ -243,6 +285,19 @@ void alquilarPelicula(void)
 					numPelicula++;
 				}
 			}
+
+			printf("\nIntroduce el titulo de la pelicula: ");
+			scanf("\n%s", &titulo);
+
+			
+
+			printf("\nALQUILER: %s\n=======================================");
+			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
+			printf("Introduce una opcion: ");
+			scanf("\n%i", &duracionAlquiler);
+			printf("\n¡Gracias por alquilar!\n");
+			//Llamada a la funcion para guardar el alquiler en la base de datos
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
 	case 6:
 			//Cargar las peliculas de TERROR
 			while(fgets(linea, sizeof(linea), f)){
@@ -260,6 +315,19 @@ void alquilarPelicula(void)
 					numPelicula++;
 				}
 			}
+
+			printf("\nIntroduce el titulo de la pelicula: ");
+			scanf("\n%s", &titulo);
+
+			
+
+			printf("\nALQUILER: %s\n=======================================");
+			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
+			printf("Introduce una opcion: ");
+			scanf("\n%i", &duracionAlquiler);
+			printf("\n¡Gracias por alquilar!\n");
+			//Llamada a la funcion para guardar el alquiler en la base de datos
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
 	case 7:
 			//Cargar las peliculas ROMANTICAS
 			while(fgets(linea, sizeof(linea), f)){
@@ -278,12 +346,30 @@ void alquilarPelicula(void)
 				}
 			}
 
-	default: printf("Opcion no valida");
+			printf("\nIntroduce el titulo de la pelicula: ");
+			scanf("\n%s", &titulo);
+
+			
+
+			printf("\nALQUILER: %s\n=======================================");
+			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
+			printf("Introduce una opcion: ");
+			scanf("\n%i", &duracionAlquiler);
+			printf("\n¡Gracias por alquilar!\n");
+			//Llamada a la funcion para guardar el alquiler en la base de datos
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
+
+	default: break;
 	}
 }
+//FUNCION PARA GUARDAR EL ALQUILER EN LA BASE DE DATOS
+void guardarAlquiler(char usuario[], char pelicula[], int *duracion)
+{
 
+}
 
-void datosUsuario(void)
+//FUNCION PARA MOSTRAR LOS DATOS DEL USUARIO
+void datosUsuario(char usuario[])
 {
 	system("cls");
 	int opcionDatosUsuario;
@@ -302,13 +388,13 @@ void datosUsuario(void)
 		
 		break;
 	case 3:
-		menu();
+		menu(usuario);
 		break;
 	default:
 		break;
 	}
 }
-
+//FUNCION PARA MOSTRAR LOS DATOS DEL ALQUILER
 void datosAlquiler(void)
 {
 
