@@ -134,12 +134,13 @@ void alquilarPelicula(char usuario[])
 	char linea[1000];
 	char *pelicula;
 	char *genero;
-	char *titulo;
+	char titulo[100];
 	char **listaPelis;
 	listaPelis = (char**)malloc(sizeof(char*)*20);
 
 	int seleccion;
-	int *duracionAlquiler;
+	int duracionAlquiler;
+	int dias;
 	int numPelicula = 1;
 
 	printf("\nGENERO\n=======================================\n");
@@ -167,7 +168,7 @@ void alquilarPelicula(char usuario[])
 
 				if(strcmp(genero, "Acción") == 0)
 				{
-					printf("%d.%s", numPelicula, pelicula);
+					printf("%d.%s\n", numPelicula, pelicula);
 					//strcpy(listaPelis[numPelicula], pelicula);
 					numPelicula++;
 				}
@@ -181,12 +182,15 @@ void alquilarPelicula(char usuario[])
 			
 
 			printf("\nALQUILER: %s\n=======================================");
-			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
-			printf("Introduce una opcion: ");
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
-			printf("\n¡Gracias por alquilar!\n");
-			//Llamada a la funcion para guardar el alquiler en la base de datos
 			guardarAlquiler(usuario, titulo, duracionAlquiler);
+
+			printf("\n¡Gracias por alquilar!\n");
+
+
+			break;
 			
 
 	case 2:
@@ -208,6 +212,23 @@ void alquilarPelicula(char usuario[])
 				}
 			}
 
+			
+			printf("\nIntroduce el titulo de la pelicula: ");
+			scanf("\n%s", &titulo);
+
+			
+
+			printf("\nALQUILER: %s\n=======================================");
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
+			scanf("\n%i", &duracionAlquiler);
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
+
+			printf("\n¡Gracias por alquilar!\n");
+
+
+			break;
+
 	case 3:
 			//Cargar las peliculas de CIENCIA FICCION
 			while(fgets(linea, sizeof(linea), f)){
@@ -226,18 +247,22 @@ void alquilarPelicula(char usuario[])
 				}
 			}
 
+			
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 
 			
 
 			printf("\nALQUILER: %s\n=======================================");
-			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
-			printf("Introduce una opcion: ");
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
+
 			printf("\n¡Gracias por alquilar!\n");
-			//Llamada a la funcion para guardar el alquiler en la base de datos
-			guardarAlquiler(usuario, titulo, duracionAlquiler);	
+
+
+			break;
 	case 4:
 			//Cargar las peliculas CLASICAS
 			while(fgets(linea, sizeof(linea), f)){
@@ -256,18 +281,22 @@ void alquilarPelicula(char usuario[])
 				}
 			}
 
+			
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 
 			
 
 			printf("\nALQUILER: %s\n=======================================");
-			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
-			printf("Introduce una opcion: ");
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
-			printf("\n¡Gracias por alquilar!\n");
-			//Llamada a la funcion para guardar el alquiler en la base de datos
 			guardarAlquiler(usuario, titulo, duracionAlquiler);
+
+			printf("\n¡Gracias por alquilar!\n");
+
+
+			break;
 
 	case 5:
 			//Cargar las peliculas de COMEDIA
@@ -287,18 +316,22 @@ void alquilarPelicula(char usuario[])
 				}
 			}
 
+			
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 
 			
 
 			printf("\nALQUILER: %s\n=======================================");
-			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
-			printf("Introduce una opcion: ");
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
-			printf("\n¡Gracias por alquilar!\n");
-			//Llamada a la funcion para guardar el alquiler en la base de datos
 			guardarAlquiler(usuario, titulo, duracionAlquiler);
+
+			printf("\n¡Gracias por alquilar!\n");
+
+
+			break;
 	case 6:
 			//Cargar las peliculas de TERROR
 			while(fgets(linea, sizeof(linea), f)){
@@ -317,18 +350,23 @@ void alquilarPelicula(char usuario[])
 				}
 			}
 
+
+			
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 
 			
 
 			printf("\nALQUILER: %s\n=======================================");
-			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
-			printf("Introduce una opcion: ");
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
-			printf("\n¡Gracias por alquilar!\n");
-			//Llamada a la funcion para guardar el alquiler en la base de datos
 			guardarAlquiler(usuario, titulo, duracionAlquiler);
+
+			printf("\n¡Gracias por alquilar!\n");
+
+
+			break;
 	case 7:
 			//Cargar las peliculas ROMANTICAS
 			while(fgets(linea, sizeof(linea), f)){
@@ -347,26 +385,73 @@ void alquilarPelicula(char usuario[])
 				}
 			}
 
+
+			
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 
 			
 
 			printf("\nALQUILER: %s\n=======================================");
-			printf("\n1.Alquilar 3 días: 3€\n2.Alquilar 5 días: 4,5€\n3.Alquilar 7 días: 6€\n");
-			printf("Introduce una opcion: ");
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
-			printf("\n¡Gracias por alquilar!\n");
-			//Llamada a la funcion para guardar el alquiler en la base de datos
 			guardarAlquiler(usuario, titulo, duracionAlquiler);
+
+			printf("\n¡Gracias por alquilar!\n");
+
+
+			break;
 
 	default: break;
 	}
 }
 //FUNCION PARA GUARDAR EL ALQUILER EN LA BASE DE DATOS
-void guardarAlquiler(char usuario[], char pelicula[], int *duracion)
+void guardarAlquiler(char usuario[], char pelicula[], int duracion)
 {
+	sqlite3 *db;
+	sqlite3_stmt *stmt;
+	int result;
 
+	sqlite3_open("BaseDeDatos/UserDB.db", &db);
+
+	// -- SELECT DNI DEL USUARIO --
+	char sql[] = "SELECT DNI FROM usuario WHERE user = ?";
+	char dni[100];
+	
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, usuario, strlen(usuario), SQLITE_STATIC);
+
+	do{
+		result = sqlite3_step(stmt);
+		if(result == SQLITE_ROW){
+			//GUARDA EL DNI DEL USUARIO EN UNA VARIABLE
+			strcpy(dni, (char*) sqlite3_column_text(stmt,0));
+		}
+	} while(result == SQLITE_ROW);
+
+	sqlite3_finalize(stmt);
+
+	// INSERTAR EL ALQUILER EN LA BASE DE DATOS
+	char sql2[] = "INSERT INTO alquiler (TITULO_PELI, DURACION_ALQUILER, DNI) VALUES(?, ?, ?)";
+
+	sqlite3_prepare_v2(db, sql2, strlen(sql2), &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, pelicula, strlen(pelicula), SQLITE_STATIC);
+	sqlite3_bind_int(stmt, 2, duracion);
+	sqlite3_bind_text(stmt, 3, dni, strlen(dni), SQLITE_STATIC);
+
+	result = sqlite3_step(stmt);
+	if(result != SQLITE_DONE){
+		printf("Error insertando el alquiler\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	} else{
+		printf("Alquiler de la pelicula '%s' durante %d dias al usuario '%s' con DNI: %s insertado correctamente", pelicula, duracion, usuario, dni);
+	}
+
+	sqlite3_finalize(stmt);
+
+	//CERRAR BASE DE DATOS
+	sqlite3_close(db);
 }
 
 //FUNCION PARA MOSTRAR LOS DATOS DEL USUARIO
