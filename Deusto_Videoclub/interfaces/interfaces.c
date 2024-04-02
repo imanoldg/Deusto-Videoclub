@@ -9,6 +9,7 @@
 #include "interfaces.h"
 #include <string.h>
 #include <stdlib.h>
+#include "sqlite3.h"
 //FUNCION DEL INICIO DEL PROGRAMA
 void inicio(void)
 {
@@ -133,7 +134,7 @@ void alquilarPelicula(char usuario[])
 	char linea[1000];
 	char *pelicula;
 	char *genero;
-	char titulo;
+	char *titulo;
 	char **listaPelis;
 	listaPelis = (char**)malloc(sizeof(char*)*20);
 
