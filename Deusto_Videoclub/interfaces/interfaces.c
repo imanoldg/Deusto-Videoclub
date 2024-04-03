@@ -115,7 +115,7 @@ void menu(char usuario[])
 		datosUsuario(usuario);
 		break;
 	case 4:
-
+		datosAlquiler(usuario);
 		break;
 	case 5:
 
@@ -416,8 +416,9 @@ void guardarAlquiler(char usuario[], char pelicula[], int duracion)
 	sqlite3_open("BaseDeDatos/UserDB.db", &db);
 
 	// -- SELECT DNI DEL USUARIO --
-	char sql[] = "SELECT DNI FROM usuario WHERE user = ?";
+	char sql[] = "SELECT DNI, PUNTOS FROM usuario WHERE user = ?";
 	char dni[100];
+	int puntos;
 	
 	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
 	sqlite3_bind_text(stmt, 1, usuario, strlen(usuario), SQLITE_STATIC);
@@ -427,6 +428,7 @@ void guardarAlquiler(char usuario[], char pelicula[], int duracion)
 		if(result == SQLITE_ROW){
 			//GUARDA EL DNI DEL USUARIO EN UNA VARIABLE
 			strcpy(dni, (char*) sqlite3_column_text(stmt,0));
+			puntos = sqlite3_column_int(stmt, 1);
 		}
 	} while(result == SQLITE_ROW);
 
@@ -442,14 +444,30 @@ void guardarAlquiler(char usuario[], char pelicula[], int duracion)
 
 	result = sqlite3_step(stmt);
 	if(result != SQLITE_DONE){
-		printf("Error insertando el alquiler\n");
+		printf("\nError insertando el alquiler\n");
 		printf("%s\n", sqlite3_errmsg(db));
 	} else{
-		printf("Alquiler de la pelicula '%s' durante %d dias al usuario '%s' con DNI: %s insertado correctamente", pelicula, duracion, usuario, dni);
+		printf("\nAlquiler de la pelicula '%s' durante %d dias al usuario '%s' con DNI: %s insertado correctamente\n", pelicula, duracion, usuario, dni);
 	}
 
 	sqlite3_finalize(stmt);
 
+	char sql3[] = "UPDATE usuario SET PUNTOS = ? + ? WHERE DNI = ?";
+
+	sqlite3_prepare_v2(db, sql3, strlen(sql3), &stmt, NULL);
+	sqlite3_bind_int(stmt, 1, puntos);
+	sqlite3_bind_int(stmt, 2, duracion);
+	sqlite3_bind_text(stmt, 3, dni, strlen(dni), SQLITE_STATIC);
+
+	result = sqlite3_step(stmt);
+	if(result != SQLITE_DONE){
+		printf("\nError actualizando los datos\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	} else{
+		printf("\n¡+%d puntos añadidos exitosamente!\n", duracion);
+	}
+
+	sqlite3_finalize(stmt);
 	//CERRAR BASE DE DATOS
 	sqlite3_close(db);
 }
@@ -481,7 +499,67 @@ void datosUsuario(char usuario[])
 	}
 }
 //FUNCION PARA MOSTRAR LOS DATOS DEL ALQUILER
-void datosAlquiler(void)
+void datosAlquiler(char usuario[])
 {
+	sqlite3 *db;
+	sqlite3_stmt *stmt;
+	int result;
 
+	sqlite3_open("BaseDeDatos/UserDB.db", &db);
+
+	//-- SELECT DNI DEL USUARIO
+	char sql[] = "SELECT DNI FROM usuario WHERE user = ?";
+	char dni[100];
+
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, usuario,strlen(usuario), SQLITE_STATIC);
+
+	do{
+		result = sqlite3_step(stmt);
+		if(result == SQLITE_ROW){
+			//GUARDA LE DNI DEL USUARIO EN UNA VARIABLE
+			strcpy(dni, (char*) sqlite3_column_text(stmt,0));
+		}
+	} while(result == SQLITE_ROW);
+
+	sqlite3_finalize(stmt);
+
+	// -- SELECT DE LOS ALQUILERES DEL USUARIO
+	char sql2[] = "SELECT * FROM ALQUILER WHERE DNI = ?";
+	
+	sqlite3_prepare_v2(db, sql2, strlen(sql2), &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
+
+	do{
+		int i;
+		result = sqlite3_step(stmt);
+		if(result == SQLITE_ROW){
+
+			printf("CODIGO: %d   TITULO: %s   DURACION: %d\n", sqlite3_column_int(stmt, 0), (char *)sqlite3_column_text(stmt,1), sqlite3_column_int(stmt, 2));
+
+		}
+
+	} while(result == SQLITE_ROW);
+
+	sqlite3_finalize(stmt);
+
+	// --SELECT DEL ALQUILER SEGUN EL CODIGO
+	int codigo;
+	printf("Introduce el CODIGO DEL ALQUILER: ");
+	scanf("\n%i", &codigo);
+
+	char sql3[] = "SELECT TITULO_PELI, DURACION_ALQUILER FROM alquiler WHERE ID_ALQUILER = ?";
+	sqlite3_prepare_v2(db, sql3, strlen(sql3), &stmt, NULL);
+	sqlite3_bind_int(stmt,1,codigo);
+
+	do{
+		result = sqlite3_step(stmt);
+		if(result == SQLITE_ROW){
+			printf("%s\n=======================================\n", (char *)sqlite3_column_text(stmt,0));
+			printf("Duracion del alquiler: %d dias\nPuntos Obtenidos con el alquiler: %i", sqlite3_column_int(stmt, 1), sqlite3_column_int(stmt, 1));
+		}
+	} while (result == SQLITE_ROW);
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
 }

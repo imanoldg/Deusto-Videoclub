@@ -17,5 +17,5 @@ void genero(void);
 void datosUsuario(char usuario[]);
 void alquilarPelicula(char usuario[]);
 void guardarAlquiler(char usuario[], char pelicula[], int duracion);
-
+void datosAlquiler(char usuario[]);
 #endif /* INTERFACES_INTERFACES_H_ */
