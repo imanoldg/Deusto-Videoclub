@@ -109,7 +109,7 @@ void menu(char usuario[])
 		alquilarPelicula(usuario); //de esta ventana irá a peliculas de dicho genero para luego gestionar el alquiler.
 		break;
 	case 2:
-		//genero(); // En vez de ir a la ventana de genero debería ir a la ventana propia de alquileres.
+		extenderAlquiler(usuario);
 		break;
 	case 3:
 		datosUsuario(usuario);
@@ -181,7 +181,7 @@ void alquilarPelicula(char usuario[])
 
 			
 
-			printf("\nALQUILER: %s\n=======================================");
+			printf("\nALQUILER: %s\n=======================================", titulo);
 			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
 			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
@@ -218,7 +218,7 @@ void alquilarPelicula(char usuario[])
 
 			
 
-			printf("\nALQUILER: %s\n=======================================");
+			printf("\nALQUILER: %s\n=======================================", titulo);
 			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
 			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
@@ -253,7 +253,7 @@ void alquilarPelicula(char usuario[])
 
 			
 
-			printf("\nALQUILER: %s\n=======================================");
+			printf("\nALQUILER: %s\n=======================================", titulo);
 			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
 			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
@@ -287,7 +287,7 @@ void alquilarPelicula(char usuario[])
 
 			
 
-			printf("\nALQUILER: %s\n=======================================");
+			printf("\nALQUILER: %s\n=======================================", titulo);
 			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
 			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
@@ -322,7 +322,7 @@ void alquilarPelicula(char usuario[])
 
 			
 
-			printf("\nALQUILER: %s\n=======================================");
+			printf("\nALQUILER: %s\n=======================================", titulo);
 			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
 			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
@@ -357,7 +357,7 @@ void alquilarPelicula(char usuario[])
 
 			
 
-			printf("\nALQUILER: %s\n=======================================");
+			printf("\nALQUILER: %s\n=======================================", titulo);
 			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
 			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
@@ -392,7 +392,7 @@ void alquilarPelicula(char usuario[])
 
 			
 
-			printf("\nALQUILER: %s\n=======================================");
+			printf("\nALQUILER: %s\n=======================================", titulo);
 			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
 			printf("Cuantos dias quieres alquilar: ");
 			scanf("\n%i", &duracionAlquiler);
@@ -559,6 +559,115 @@ void datosAlquiler(char usuario[])
 			printf("Duracion del alquiler: %d dias\nPuntos Obtenidos con el alquiler: %i", sqlite3_column_int(stmt, 1), sqlite3_column_int(stmt, 1));
 		}
 	} while (result == SQLITE_ROW);
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+}
+
+
+void extenderAlquiler(char usuario[])
+{
+	sqlite3 *db;
+	sqlite3_stmt *stmt;
+	int result;
+	int extension;
+	int duracion;
+	int puntos;
+
+	sqlite3_open("BaseDeDatos/UserDB.db", &db);
+
+	// -- SELECT DNI DEL USUARIO
+	char sql[] = "SELECT DNI, PUNTOS FROM usuario WHERE user = ?";
+	char dni[100];
+
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, usuario,strlen(usuario), SQLITE_STATIC);
+
+	do{
+		result = sqlite3_step(stmt);
+		if(result == SQLITE_ROW){
+			//GUARDA LE DNI DEL USUARIO EN UNA VARIABLE
+			strcpy(dni, (char*) sqlite3_column_text(stmt,0));
+			puntos = sqlite3_column_int(stmt, 1);
+		}
+	} while(result == SQLITE_ROW);
+
+	sqlite3_finalize(stmt);
+
+	// -- SELECT DE LOS ALQUILERES DEL USUARIO
+	char sql2[] = "SELECT * FROM ALQUILER WHERE DNI = ?";
+	
+	sqlite3_prepare_v2(db, sql2, strlen(sql2), &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
+
+	do{
+		int i;
+		result = sqlite3_step(stmt);
+		if(result == SQLITE_ROW){
+
+			printf("CODIGO: %d   TITULO: %s   DURACION: %d\n", sqlite3_column_int(stmt, 0), (char *)sqlite3_column_text(stmt,1), sqlite3_column_int(stmt, 2));
+
+		}
+
+	} while(result == SQLITE_ROW);
+
+	sqlite3_finalize(stmt);
+
+	// --SELECT DEL ALQUILER SEGUN EL CODIGO
+	int codigo;
+	printf("Introduce el CODIGO DEL ALQUILER: ");
+	scanf("\n%i", &codigo);
+
+	char sql3[] = "SELECT TITULO_PELI, DURACION_ALQUILER FROM alquiler WHERE ID_ALQUILER = ?";
+	sqlite3_prepare_v2(db, sql3, strlen(sql3), &stmt, NULL);
+	sqlite3_bind_int(stmt,1,codigo);
+
+	do{
+		result = sqlite3_step(stmt);
+		if(result == SQLITE_ROW){
+			printf("\nALQUILER: %s\n=======================================", (char*) sqlite3_column_text(stmt,0));
+			printf("\n3.Extender 3 días: 3 euros\n5.Extender 5 días: 4,5 euros\n7.Extender 7 días: 6 euros\n");
+			duracion = sqlite3_column_int(stmt,1);
+		}
+	} while (result == SQLITE_ROW);
+
+	printf("Cuantos dias quieres extender: ");
+	scanf("\n%i", &extension);
+	sqlite3_finalize(stmt);
+
+	char sql4[] = "UPDATE alquiler SET DURACION_ALQUILER = ? + ? WHERE DNI = ? AND ID_ALQUILER = ?";
+	
+	sqlite3_prepare_v2(db, sql4, strlen(sql4), &stmt, NULL);
+	sqlite3_bind_int(stmt,1,duracion);
+	sqlite3_bind_int(stmt,2,extension);
+	sqlite3_bind_text(stmt, 3, dni, strlen(dni), SQLITE_STATIC);
+	sqlite3_bind_int(stmt,4,codigo);
+
+	result = sqlite3_step(stmt);
+	if(result != SQLITE_DONE){
+		printf("\nError actualizando los datos\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	} else{
+		printf("\nAlquiler extendido %i dias con exito\n", extension);
+	}
+	
+	sqlite3_finalize(stmt);
+
+	char sql5[] = "UPDATE usuario SET PUNTOS = ? + ? WHERE DNI = ?";
+
+	sqlite3_prepare_v2(db, sql5, strlen(sql5), &stmt, NULL);
+	sqlite3_bind_int(stmt, 1, puntos);
+	sqlite3_bind_int(stmt, 2, extension);
+	sqlite3_bind_int(stmt, 3, extension);
+	sqlite3_bind_text(stmt, 4, dni, strlen(dni), SQLITE_STATIC);
+
+	result = sqlite3_step(stmt);
+	if(result != SQLITE_DONE){
+		printf("\nError actualizando los datos\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	} else{
+		printf("\n%i puntos añadidos\n", extension);
+	}
 
 	sqlite3_finalize(stmt);
 	sqlite3_close(db);
