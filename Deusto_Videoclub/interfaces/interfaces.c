@@ -69,10 +69,11 @@ void registrarUsuario(void)
 	char nombre[40];
 	char apellido[60];
 	char dni[9];
+	int telef[9];
 	char email[100];
 	int num_tarjeta[16];
 	char genero[1];
-	int fecha_nacimiento[10];
+	char fecha_nacimiento[10];
 	char usuario[40];
 	char contraseña[60];
 
@@ -85,10 +86,12 @@ void registrarUsuario(void)
 	scanf("%s", &apellido);
 	printf("Introducir DNI: \n");
 	scanf("%s", &dni);
+	printf("Introducir Telefono: \n");
+	scanf("%i", &telef);
 	printf("Introducir email: \n");
 	scanf("%s", &email);
 	printf("Introducir Nº Tarjeta: \n");
-	scanf("%s", &num_tarjeta);
+	scanf("%i", &num_tarjeta);
 	printf("Introducir Género(H/M): \n");
 	scanf("%s", &genero);
 	printf("Introducir Fecha de  Nacimiento(XXXX-XX-XX): \n");
@@ -98,7 +101,35 @@ void registrarUsuario(void)
 	printf("Introducir Contraseña: \n");
 	scanf("%s", &contraseña);
 
+	sqlite3 *db;
+	sqlite3_stmt *stmt;
+	int result;
+
+	sqlite3_open("BaseDeDatos/UserDB.db", &db);
+
+	//INSERTAR EL NUEVO USUARIO EN LA BASE DE DATOS
+	char sql[] = "INSERT INTO usuario (DNI, Nombre, Apellido, Email, Telefono, User, Password, Genero, Fecha_ncto, N_TARJETA) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 2, nombre, strlen(nombre), SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 3, apellido, strlen(apellido), SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 4, email, strlen(email), SQLITE_STATIC);
+	sqlite3_bind_int(stmt, 5, telef);
+	sqlite3_bind_text(stmt, 6, usuario, strlen(usuario), SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 7, contraseña, strlen(contraseña), SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 8, genero, strlen(genero), SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 9, fecha_nacimiento, strlen(fecha_nacimiento), SQLITE_STATIC);
+	sqlite3_bind_int(stmt, 10, num_tarjeta);
+
+	result = sqlite3_step(stmt);
+	if(result != SQLITE_DONE){
+		printf("\nError registrando al usuario\n");
+	} else{
+		printf("\nusuario registrado correctamente");
+	}
+
+	sqlite3_finalize(stmt);
 }
 //FUNCION PARA CAMBIAR LA CONTRASEÑA DEL USUARIO
 void contrasenyaOlvidada(void)
