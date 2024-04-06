@@ -76,6 +76,7 @@ void registrarUsuario(void)
 	char fecha_nacimiento[10];
 	char usuario[40];
 	char contraseña[60];
+	int puntos = 0;
 
 	system("cls");
 	printf("\nREGISTRO DE SESIÓN\n=======================================");
@@ -107,8 +108,12 @@ void registrarUsuario(void)
 
 	sqlite3_open("BaseDeDatos/UserDB.db", &db);
 
+	//COMPROBAR QUE EL DNI DADO NO ESTA EN LA BASE DE DATOS
+	
+
+
 	//INSERTAR EL NUEVO USUARIO EN LA BASE DE DATOS
-	char sql[] = "INSERT INTO usuario (DNI, Nombre, Apellido, Email, Telefono, User, Password, Genero, Fecha_ncto, N_TARJETA) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	char sql[] = "INSERT INTO usuario (DNI, Nombre, Apellido, Email, Telefono, User, Password, Genero, Fecha_ncto, N_TARJETA, PUNTOS) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
 	sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
@@ -121,6 +126,7 @@ void registrarUsuario(void)
 	sqlite3_bind_text(stmt, 8, genero, strlen(genero), SQLITE_STATIC);
 	sqlite3_bind_text(stmt, 9, fecha_nacimiento, strlen(fecha_nacimiento), SQLITE_STATIC);
 	sqlite3_bind_int(stmt, 10, num_tarjeta);
+	sqlite3_bind_int(stmt, 11, puntos);
 
 	result = sqlite3_step(stmt);
 	if(result != SQLITE_DONE){
