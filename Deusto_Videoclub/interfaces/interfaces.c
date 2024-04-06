@@ -109,8 +109,15 @@ void registrarUsuario(void)
 	sqlite3_open("BaseDeDatos/UserDB.db", &db);
 
 	//COMPROBAR QUE EL DNI DADO NO ESTA EN LA BASE DE DATOS
-	
+	char sqlPrueba[] = "SELECT DNI FROM usuario WHERE DNI = ?";
+	sqlite3_prepare_v2(db, sqlPrueba, strlen(sqlPrueba), &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
 
+	result = sqlite3_step(stmt);
+	if(result == SQLITE_DONE){
+		printf("\nError, ya hay un usuario registrado con ese DNI\n");
+	} 
+	sqlite3_finalize(stmt);
 
 	//INSERTAR EL NUEVO USUARIO EN LA BASE DE DATOS
 	char sql[] = "INSERT INTO usuario (DNI, Nombre, Apellido, Email, Telefono, User, Password, Genero, Fecha_ncto, N_TARJETA, PUNTOS) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
