@@ -143,6 +143,9 @@ void registrarUsuario(void)
 	}
 
 	sqlite3_finalize(stmt);
+
+	//CERRAR BASE DE DATOS
+	sqlite3_close(db);
 }
 //FUNCION PARA CAMBIAR LA CONTRASEÑA DEL USUARIO
 void contrasenyaOlvidada(void)
