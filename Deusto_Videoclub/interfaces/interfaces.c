@@ -150,11 +150,39 @@ void registrarUsuario(void)
 //FUNCION PARA CAMBIAR LA CONTRASEÑA DEL USUARIO
 void contrasenyaOlvidada(void)
 {
+	char dni[9];
+	char nuevaContraseña[60];
+
 	system("cls");
 	printf("\nCONTRASEÑA OLVIDADA\n=======================================\n");
 
 	printf("Introducir DNI: \n");
+	scanf("%s", &dni);
 	printf("Introducir Contraseña Nueva: \n");
+	scanf("%s", &nuevaContraseña);
+
+	sqlite3 *db;
+	sqlite3_stmt *stmt;
+	int result;
+
+	sqlite3_open("BaseDeDatos/UserDB.db", &db);
+
+	char sql[] = "UPDATE usuario SET Password = ? WHERE DNI = ?";
+
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, nuevaContraseña, strlen(nuevaContraseña), SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 2, dni, strlen(dni), SQLITE_STATIC);
+
+	result = sqlite3_step(stmt);
+	if(result != SQLITE_DONE){
+		printf("\nError al cambiar la contraseña\n");
+	} else{
+		printf("\n¡Contraseña cambiada correctamente!\n");
+	}
+	sqlite3_finalize(stmt);
+	
+	//CERRAR BASE DE DATOS
+	sqlite3_close(db);
 }
 
 //FUNCION QUE MUESTRA EL MENU PRINCIPAL
