@@ -65,20 +65,40 @@ void iniciarSesion(void)
 //FUNCION PARA REGISTRAR UN USUARIO NUEVO
 void registrarUsuario(void)
 {
+
+	char nombre[40];
+	char apellido[60];
+	char dni[9];
+	char email[100];
+	int num_tarjeta[16];
+	char genero[1];
+	int fecha_nacimiento[10];
+	char usuario[40];
+	char contraseña[60];
+
 	system("cls");
 	printf("\nREGISTRO DE SESIÓN\n=======================================");
 
 	printf("Introducir Nombre: \n");
+	scanf("%s", &nombre);
 	printf("Introducir Apellido: \n");
+	scanf("%s", &apellido);
 	printf("Introducir DNI: \n");
+	scanf("%s", &dni);
 	printf("Introducir email: \n");
+	scanf("%s", &email);
 	printf("Introducir Nº Tarjeta: \n");
+	scanf("%s", &num_tarjeta);
 	printf("Introducir Género(H/M): \n");
-	printf("Introducir Año Nacimiento(XXXX): \n");
-	printf("Introducir Mes Nacimiento(XX): \n");
-	printf("Introducir Día Nacimiento(XX): \n");
+	scanf("%s", &genero);
+	printf("Introducir Fecha de  Nacimiento(XXXX-XX-XX): \n");
+	scanf("%s", &fecha_nacimiento);
 	printf("Introducir Usuario: \n");
+	scanf("%s", &usuario);
 	printf("Introducir Contraseña: \n");
+	scanf("%s", &contraseña);
+
+	
 }
 //FUNCION PARA CAMBIAR LA CONTRASEÑA DEL USUARIO
 void contrasenyaOlvidada(void)
