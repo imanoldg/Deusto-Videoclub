@@ -43,8 +43,9 @@ void inicio(void)
 void iniciarSesion(void)
 {
 	system("cls");
-	char usuario[10];
-	char password[10];
+	char usuario[40];
+	char contraseña[60];
+	char contraseñaBD[60];
 
 	printf("\n=======================================\nINICIO DE SESION\n=======================================\n\n");
 
@@ -52,15 +53,40 @@ void iniciarSesion(void)
 	scanf("%s", usuario);
 
 	printf("Introducir Contraseña: ");
-	scanf("%s", password);
+	scanf("%s", contraseña);
 
-	if ((strcmp(usuario, "pomodoro") == 0) && (strcmp(password, "liso") == 0))
+	sqlite3 *db;
+	sqlite3_stmt *stmt;
+	int result;
+
+	sqlite3_open("BaseDeDatos/UserDB.db", &db);
+
+	//COMPROBAR QUE LA CONTRASEÑA DEL USUARIO INTRODUCIDO ES CORRECTA
+	char sql[] = "SELECT Password FROM usuario WHERE User = ?";
+	
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, usuario, strlen(usuario), SQLITE_STATIC);
+
+	do{
+		result = sqlite3_step(stmt);
+		if(result == SQLITE_ROW){
+			//GUARDA EL DNI DEL USUARIO EN UNA VARIABLE
+			strcpy(contraseñaBD, (char*) sqlite3_column_text(stmt, 0));
+		}
+	} while(result == SQLITE_ROW);
+
+	sqlite3_finalize(stmt);
+
+	if (strcmp(contraseña, contraseñaBD) == 0)
 	{
 		menu(usuario);
 	}else
 	{
 		printf("usuario o contraseña incorrectos");
 	}
+
+	//CERRAR BASE DE DATOS
+	sqlite3_close(db);
 }
 //FUNCION PARA REGISTRAR UN USUARIO NUEVO
 void registrarUsuario(void)
