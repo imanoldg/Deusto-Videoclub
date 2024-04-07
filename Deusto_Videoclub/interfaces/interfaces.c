@@ -211,6 +211,55 @@ void contrasenyaOlvidada(void)
 	sqlite3_close(db);
 }
 
+//FUNCION PARA ELIMINAR USUARIO
+void borrarUsuario(void)
+{
+	char usuario[40];
+	char contraseña[60];
+	char respuesta[1];
+
+	system("cls");
+	printf("\nBORRAR USUARIO\n=======================================");
+
+	printf("Introducir Usuario: \n");
+	scanf("%s", &usuario);
+	printf("Introducir Contraseña: \n");
+	scanf("%s", &contraseña);
+
+	printf("¿Seguro que quieres eliminar el usuario? Y/N: \n");
+	scanf("%s", &respuesta);
+
+	if(respuesta == 'Y'){
+		sqlite3 *db;
+		sqlite3_stmt *stmt;
+		int result;
+
+		sqlite3_open("BaseDeDatos/UserDB.db", &db);
+
+		char sql[] = "DELETE FROM usuario WHERE User = ? AND Password = ?";
+		
+		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+		sqlite3_bind_text(stmt, 1, usuario, strlen(usuario), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 2, contraseña, strlen(usuario), SQLITE_STATIC);
+
+		result = sqlite3_step(stmt);
+			if(result != SQLITE_DONE){
+				printf("\nError al borrar el usuario\n");
+			} else{
+				printf("\nUsuario borrado correctamente");
+			}
+
+			sqlite3_finalize(stmt);
+
+			//CERRAR BASE DE DATOS
+			sqlite3_close(db);
+
+	}else{
+		datosUsuario(usuario);
+	}
+
+
+}
 //FUNCION QUE MUESTRA EL MENU PRINCIPAL
 void menu(char usuario[])
 {
@@ -610,7 +659,7 @@ void datosUsuario(char usuario[])
 		
 		break;
 	case 2:
-		
+		borrarUsuario();
 		break;
 	case 3:
 		menu(usuario);
