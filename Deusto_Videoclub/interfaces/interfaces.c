@@ -656,7 +656,7 @@ void datosUsuario(char usuario[])
 	switch (opcionDatosUsuario)
 	{
 	case 1:
-		
+		editarInfo(usuario);
 		break;
 	case 2:
 		borrarUsuario();
@@ -668,6 +668,109 @@ void datosUsuario(char usuario[])
 		break;
 	}
 }
+
+//FUNCION PARA EDITAR INFORMACION
+void editarInfo(char usuario[])
+{
+	system("cls");
+	int opcion;
+	printf("\n=======================================\nQUE DATOS QUIERES CAMBIAR\n=======================================\n\n");
+	printf("1.Telefono\n2.Email\n3.Numero de tarjeta\n4.Volver atras\n");
+	printf("Introducir opcion: ");
+	scanf("%i", &opcion);
+
+	sqlite3 *db;
+	sqlite3_stmt *stmt;
+	int result;
+
+	sqlite3_open("BaseDeDatos/UserDB.db", &db);
+
+	switch (opcion)
+	{
+	case 1:
+		int telef[9];
+		printf("Introduce el telefono nuevo: ");
+		scanf("%i", &telef);
+
+		char sql[] = "UPDATE usuario SET Telefono = ? WHERE User = ?";
+		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+		sqlite3_bind_int(stmt, 1, telef);
+		sqlite3_bind_text(stmt, 2, usuario, strlen(usuario), SQLITE_STATIC);
+
+		result = sqlite3_step(stmt);
+			if(result != SQLITE_DONE){
+				printf("\nError al cambiar el telefono\n");
+			} else{
+				printf("\n¡Telefono cambiado correctamente!\n");
+			}
+			sqlite3_finalize(stmt);
+			
+			//CERRAR BASE DE DATOS
+			sqlite3_close(db);
+
+		datosUsuario(usuario);
+		break;
+	
+	case 2:
+		char email[100];
+		printf("Introduce el email nuevo: ");
+		scanf("%s", &email);
+
+		char sql[] = "UPDATE usuario SET Telefono = ? WHERE Email = ?";
+		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+		sqlite3_bind_text(stmt, 1, email, strlen(email), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 2, usuario, strlen(usuario), SQLITE_STATIC);
+
+		result = sqlite3_step(stmt);
+			if(result != SQLITE_DONE){
+				printf("\nError al cambiar el email\n");
+			} else{
+				printf("\n¡Email cambiado correctamente!\n");
+			}
+			sqlite3_finalize(stmt);
+			
+			//CERRAR BASE DE DATOS
+			sqlite3_close(db);
+
+		datosUsuario(usuario);
+		break;
+	case 3:
+		int num_tarjeta[16];
+		printf("Introduce el numero de tarjeta nuevo: ");
+		scanf("%i", &num_tarjeta);
+
+		char sql[] = "UPDATE usuario SET N_TARJETA = ? WHERE User = ?";
+		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+		sqlite3_bind_int(stmt, 1, num_tarjeta);
+		sqlite3_bind_text(stmt, 2, usuario, strlen(usuario), SQLITE_STATIC);
+
+		result = sqlite3_step(stmt);
+			if(result != SQLITE_DONE){
+				printf("\nError al cambiar el numero de tarjeta\n");
+			} else{
+				printf("\n¡Numero de tarjeta cambiado correctamente!\n");
+			}
+			sqlite3_finalize(stmt);
+			
+			//CERRAR BASE DE DATOS
+			sqlite3_close(db);
+
+		datosUsuario(usuario);
+		break;
+	case 4:
+		//CERRAR BASE DE DATOS
+		sqlite3_close(db);
+		
+		datosUsuario(usuario);
+		break;
+	default:
+		printf("Opcion no valida\n");
+		break;
+	}
+
+
+}
+
 //FUNCION PARA MOSTRAR LOS DATOS DEL ALQUILER
 void datosAlquiler(char usuario[])
 {
