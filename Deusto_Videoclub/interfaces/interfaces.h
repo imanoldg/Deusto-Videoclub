@@ -18,4 +18,5 @@ void alquilarPelicula(char usuario[]);
 void guardarAlquiler(char usuario[], char pelicula[], int duracion);
 void datosAlquiler(char usuario[]);
 void extenderAlquiler(char usuario[]);
+void editarInfo(char usuario[]);
 #endif /* INTERFACES_INTERFACES_H_ */

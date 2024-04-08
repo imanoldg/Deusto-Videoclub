@@ -44,8 +44,8 @@ void iniciarSesion(void)
 {
 	system("cls");
 	char usuario[40];
-	char contraseña[60];
-	char contraseñaBD[60];
+	char contrasenha[60];
+	char contrasenhaBD[60];
 
 	printf("\n=======================================\nINICIO DE SESION\n=======================================\n\n");
 
@@ -53,7 +53,7 @@ void iniciarSesion(void)
 	scanf("%s", usuario);
 
 	printf("Introducir Contraseña: ");
-	scanf("%s", contraseña);
+	scanf("%s", contrasenha);
 
 	sqlite3 *db;
 	sqlite3_stmt *stmt;
@@ -71,18 +71,18 @@ void iniciarSesion(void)
 		result = sqlite3_step(stmt);
 		if(result == SQLITE_ROW){
 			//GUARDA EL DNI DEL USUARIO EN UNA VARIABLE
-			strcpy(contraseñaBD, (char*) sqlite3_column_text(stmt, 0));
+			strcpy(contrasenhaBD, (char*) sqlite3_column_text(stmt, 0));
 		}
 	} while(result == SQLITE_ROW);
 
 	sqlite3_finalize(stmt);
 
-	if (strcmp(contraseña, contraseñaBD) == 0)
+	if (strcmp(contrasenha, contrasenhaBD) == 0)
 	{
 		menu(usuario);
 	}else
 	{
-		printf("usuario o contraseña incorrectos");
+		printf("usuario o contrasenha incorrectos");
 	}
 
 	//CERRAR BASE DE DATOS
@@ -95,13 +95,13 @@ void registrarUsuario(void)
 	char nombre[40];
 	char apellido[60];
 	char dni[9];
-	int telef[9];
+	int telef;
 	char email[100];
-	int num_tarjeta[16];
+	int num_tarjeta;
 	char genero[1];
 	char fecha_nacimiento[10];
 	char usuario[40];
-	char contraseña[60];
+	char contrasenha[60];
 	int puntos = 0;
 
 	system("cls");
@@ -126,7 +126,7 @@ void registrarUsuario(void)
 	printf("Introducir Usuario: \n");
 	scanf("%s", &usuario);
 	printf("Introducir Contraseña: \n");
-	scanf("%s", &contraseña);
+	scanf("%s", &contrasenha);
 
 	sqlite3 *db;
 	sqlite3_stmt *stmt;
@@ -155,7 +155,7 @@ void registrarUsuario(void)
 	sqlite3_bind_text(stmt, 4, email, strlen(email), SQLITE_STATIC);
 	sqlite3_bind_int(stmt, 5, telef);
 	sqlite3_bind_text(stmt, 6, usuario, strlen(usuario), SQLITE_STATIC);
-	sqlite3_bind_text(stmt, 7, contraseña, strlen(contraseña), SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 7, contrasenha, strlen(contrasenha), SQLITE_STATIC);
 	sqlite3_bind_text(stmt, 8, genero, strlen(genero), SQLITE_STATIC);
 	sqlite3_bind_text(stmt, 9, fecha_nacimiento, strlen(fecha_nacimiento), SQLITE_STATIC);
 	sqlite3_bind_int(stmt, 10, num_tarjeta);
@@ -177,7 +177,7 @@ void registrarUsuario(void)
 void contrasenyaOlvidada(void)
 {
 	char dni[9];
-	char nuevaContraseña[60];
+	char nuevaContrasenha[60];
 
 	system("cls");
 	printf("\nCONTRASEÑA OLVIDADA\n=======================================\n");
@@ -185,7 +185,7 @@ void contrasenyaOlvidada(void)
 	printf("Introducir DNI: \n");
 	scanf("%s", &dni);
 	printf("Introducir Contraseña Nueva: \n");
-	scanf("%s", &nuevaContraseña);
+	scanf("%s", &nuevaContrasenha);
 
 	sqlite3 *db;
 	sqlite3_stmt *stmt;
@@ -196,12 +196,12 @@ void contrasenyaOlvidada(void)
 	char sql[] = "UPDATE usuario SET Password = ? WHERE DNI = ?";
 
 	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
-	sqlite3_bind_text(stmt, 1, nuevaContraseña, strlen(nuevaContraseña), SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 1, nuevaContrasenha, strlen(nuevaContrasenha), SQLITE_STATIC);
 	sqlite3_bind_text(stmt, 2, dni, strlen(dni), SQLITE_STATIC);
 
 	result = sqlite3_step(stmt);
 	if(result != SQLITE_DONE){
-		printf("\nError al cambiar la contraseña\n");
+		printf("\nError al cambiar la contrasenha\n");
 	} else{
 		printf("\n¡Contraseña cambiada correctamente!\n");
 	}
@@ -215,7 +215,7 @@ void contrasenyaOlvidada(void)
 void borrarUsuario(void)
 {
 	char usuario[40];
-	char contraseña[60];
+	char contrasenha[60];
 	char respuesta[1];
 
 	system("cls");
@@ -224,12 +224,12 @@ void borrarUsuario(void)
 	printf("Introducir Usuario: \n");
 	scanf("%s", &usuario);
 	printf("Introducir Contraseña: \n");
-	scanf("%s", &contraseña);
+	scanf("%s", &contrasenha);
 
 	printf("¿Seguro que quieres eliminar el usuario? Y/N: \n");
 	scanf("%s", &respuesta);
 
-	if(respuesta == 'Y'){
+	if(strcmp(respuesta, "Y") == 0){
 		sqlite3 *db;
 		sqlite3_stmt *stmt;
 		int result;
@@ -240,7 +240,7 @@ void borrarUsuario(void)
 		
 		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
 		sqlite3_bind_text(stmt, 1, usuario, strlen(usuario), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 2, contraseña, strlen(usuario), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 2, contrasenha, strlen(usuario), SQLITE_STATIC);
 
 		result = sqlite3_step(stmt);
 			if(result != SQLITE_DONE){
@@ -682,13 +682,15 @@ void editarInfo(char usuario[])
 	sqlite3 *db;
 	sqlite3_stmt *stmt;
 	int result;
+	int telef;
+	char email[100];
+	int num_tarjeta;
 
 	sqlite3_open("BaseDeDatos/UserDB.db", &db);
 
 	switch (opcion)
 	{
 	case 1:
-		int telef[9];
 		printf("Introduce el telefono nuevo: ");
 		scanf("%i", &telef);
 
@@ -712,12 +714,11 @@ void editarInfo(char usuario[])
 		break;
 	
 	case 2:
-		char email[100];
 		printf("Introduce el email nuevo: ");
 		scanf("%s", &email);
 
-		char sql[] = "UPDATE usuario SET Telefono = ? WHERE Email = ?";
-		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+		char sql2[] = "UPDATE usuario SET Telefono = ? WHERE Email = ?";
+		sqlite3_prepare_v2(db, sql2, strlen(sql2), &stmt, NULL);
 		sqlite3_bind_text(stmt, 1, email, strlen(email), SQLITE_STATIC);
 		sqlite3_bind_text(stmt, 2, usuario, strlen(usuario), SQLITE_STATIC);
 
@@ -735,12 +736,11 @@ void editarInfo(char usuario[])
 		datosUsuario(usuario);
 		break;
 	case 3:
-		int num_tarjeta[16];
 		printf("Introduce el numero de tarjeta nuevo: ");
 		scanf("%i", &num_tarjeta);
 
-		char sql[] = "UPDATE usuario SET N_TARJETA = ? WHERE User = ?";
-		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+		char sql3[] = "UPDATE usuario SET N_TARJETA = ? WHERE User = ?";
+		sqlite3_prepare_v2(db, sql3, strlen(sql3), &stmt, NULL);
 		sqlite3_bind_int(stmt, 1, num_tarjeta);
 		sqlite3_bind_text(stmt, 2, usuario, strlen(usuario), SQLITE_STATIC);
 
