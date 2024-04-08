@@ -349,15 +349,22 @@ void alquilarPelicula(char usuario[])
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 
+			while(fgets(linea, sizeof(linea), f)){
+				pelicula = strtok(linea, ";");
+				if(strcmp(pelicula, titulo) == 0){
+					printf("\nALQUILER: %s\n=======================================", titulo);
+					printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+					printf("Cuantos dias quieres alquilar: ");
+					scanf("\n%i", &duracionAlquiler);
+					guardarAlquiler(usuario, titulo, duracionAlquiler);
+
+					printf("\n¡Gracias por alquilar!\n");
+				}else{
+					printf("Esa pelicula no esta en la lista");
+				}
+				}
+
 			
-
-			printf("\nALQUILER: %s\n=======================================", titulo);
-			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
-			printf("Cuantos dias quieres alquilar: ");
-			scanf("\n%i", &duracionAlquiler);
-			guardarAlquiler(usuario, titulo, duracionAlquiler);
-
-			printf("\n¡Gracias por alquilar!\n");
 
 
 			break;
