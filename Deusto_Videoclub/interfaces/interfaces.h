@@ -12,6 +12,7 @@ void inicio(void);
 void iniciarSesion(void);
 void registrarUsuario(void);
 void contrasenyaOlvidada(void);
+void borrarUsuario(void);
 void menu(char usuario[]);
 void datosUsuario(char usuario[]);
 void alquilarPelicula(char usuario[]);
