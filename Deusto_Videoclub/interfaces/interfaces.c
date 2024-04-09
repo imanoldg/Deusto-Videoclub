@@ -93,12 +93,12 @@ void registrarUsuario(void)
 {
 
 	char nombre[40];
-	char apellido[60];
+	char apellido[100];
 	char dni[9];
 	int telef;
 	char email[100];
 	int num_tarjeta;
-	char genero[1];
+	int genero;
 	char fecha_nacimiento[10];
 	char usuario[40];
 	char contrasenha[60];
@@ -120,7 +120,7 @@ void registrarUsuario(void)
 	printf("Introducir Nº Tarjeta: \n");
 	scanf("%i", &num_tarjeta);
 	printf("Introducir Género: Hombre - 1, Mujer - 2: \n");
-	scanf("%s", &genero);
+	scanf("%i", &genero);
 	printf("Introducir Fecha de  Nacimiento(XXXX-XX-XX): \n");
 	scanf("%s", &fecha_nacimiento);
 	printf("Introducir Usuario: \n");
@@ -145,7 +145,7 @@ void registrarUsuario(void)
 	sqlite3_bind_int(stmt, 5, telef);
 	sqlite3_bind_text(stmt, 6, usuario, strlen(usuario), SQLITE_STATIC);
 	sqlite3_bind_text(stmt, 7, contrasenha, strlen(contrasenha), SQLITE_STATIC);
-	sqlite3_bind_text(stmt, 8, genero, strlen(genero), SQLITE_STATIC);
+	sqlite3_bind_int(stmt, 8, genero);
 	sqlite3_bind_text(stmt, 9, fecha_nacimiento, strlen(fecha_nacimiento), SQLITE_STATIC);
 	sqlite3_bind_int(stmt, 10, num_tarjeta);
 	sqlite3_bind_int(stmt, 11, puntos);
@@ -614,9 +614,9 @@ void datosUsuario(char usuario[])
 	system("cls");
 	int opcionDatosUsuario;
 	printf("\n=======================================\nDATOS USUARIO\n=======================================\n\n");
-	printf("\n¿Que quieres hacer?\n1.Editar informacion\n2.Eliminar Usuario\n3.Volver al Menu\n\nIntroducir opcion: ");
-
-	scanf("%i\n", &opcionDatosUsuario);
+	printf("\n¿Que quieres hacer?\n1.Editar informacion\n2.Eliminar Usuario\n3.Volver al Menu\n");
+	printf("Introducir opcion: ");
+	scanf("%i", &opcionDatosUsuario);
 
 	switch (opcionDatosUsuario)
 	{
