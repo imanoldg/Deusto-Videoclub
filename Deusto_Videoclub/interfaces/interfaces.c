@@ -208,7 +208,7 @@ void borrarUsuario(void)
 	char respuesta[1];
 
 	system("cls");
-	printf("\nBORRAR USUARIO\n=======================================");
+	printf("\nBORRAR USUARIO\n=======================================\n");
 
 	printf("Introducir Usuario: \n");
 	scanf("%s", &usuario);
@@ -229,19 +229,19 @@ void borrarUsuario(void)
 		
 		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
 		sqlite3_bind_text(stmt, 1, usuario, strlen(usuario), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 2, contrasenha, strlen(usuario), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 2, contrasenha, strlen(contrasenha), SQLITE_STATIC);
 
 		result = sqlite3_step(stmt);
-			if(result != SQLITE_DONE){
-				printf("\nError al borrar el usuario\n");
-			} else{
-				printf("\nUsuario borrado correctamente");
-			}
+		if(result != SQLITE_DONE){
+			printf("\nError al borrar el usuario\n");
+		} else{
+			printf("\nUsuario borrado correctamente");
+		}
 
-			sqlite3_finalize(stmt);
+		sqlite3_finalize(stmt);
 
-			//CERRAR BASE DE DATOS
-			sqlite3_close(db);
+		//CERRAR BASE DE DATOS
+		sqlite3_close(db);
 
 	}else{
 		datosUsuario(usuario);
