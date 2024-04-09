@@ -119,7 +119,7 @@ void registrarUsuario(void)
 	scanf("%s", &email);
 	printf("Introducir Nº Tarjeta: \n");
 	scanf("%i", &num_tarjeta);
-	printf("Introducir Género(H/M): \n");
+	printf("Introducir Género: Hombre - 1, Mujer - 2: \n");
 	scanf("%s", &genero);
 	printf("Introducir Fecha de  Nacimiento(XXXX-XX-XX): \n");
 	scanf("%s", &fecha_nacimiento);
@@ -133,17 +133,6 @@ void registrarUsuario(void)
 	int result;
 
 	sqlite3_open("BaseDeDatos/UserDB.db", &db);
-
-	//COMPROBAR QUE EL DNI DADO NO ESTA EN LA BASE DE DATOS
-	char sqlPrueba[] = "SELECT DNI FROM usuario WHERE DNI = ?";
-	sqlite3_prepare_v2(db, sqlPrueba, strlen(sqlPrueba), &stmt, NULL);
-	sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
-
-	result = sqlite3_step(stmt);
-	if(result == SQLITE_DONE){
-		printf("\nError, ya hay un usuario registrado con ese DNI\n");
-	} 
-	sqlite3_finalize(stmt);
 
 	//INSERTAR EL NUEVO USUARIO EN LA BASE DE DATOS
 	char sql[] = "INSERT INTO usuario (DNI, Nombre, Apellido, Email, Telefono, User, Password, Genero, Fecha_ncto, N_TARJETA, PUNTOS) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -349,20 +338,14 @@ void alquilarPelicula(char usuario[])
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 
-			while(fgets(linea, sizeof(linea), f)){
-				pelicula = strtok(linea, ";");
-				if(strcmp(pelicula, titulo) == 0){
-					printf("\nALQUILER: %s\n=======================================", titulo);
-					printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
-					printf("Cuantos dias quieres alquilar: ");
-					scanf("\n%i", &duracionAlquiler);
-					guardarAlquiler(usuario, titulo, duracionAlquiler);
 
-					printf("\n¡Gracias por alquilar!\n");
-				}else{
-					printf("Esa pelicula no esta en la lista");
-				}
-				}
+			printf("\nALQUILER: %s\n=======================================", titulo);
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
+			scanf("\n%i", &duracionAlquiler);
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
+
+			printf("\n¡Gracias por alquilar!\n");
 
 			
 
@@ -393,20 +376,13 @@ void alquilarPelicula(char usuario[])
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 
-			while(fgets(linea, sizeof(linea), f)){
-				pelicula = strtok(linea, ";");
-				if(strcmp(pelicula, titulo) == 0){
-					printf("\nALQUILER: %s\n=======================================", titulo);
-					printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
-					printf("Cuantos dias quieres alquilar: ");
-					scanf("\n%i", &duracionAlquiler);
-					guardarAlquiler(usuario, titulo, duracionAlquiler);
+			printf("\nALQUILER: %s\n=======================================", titulo);
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
+			scanf("\n%i", &duracionAlquiler);
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
 
-					printf("\n¡Gracias por alquilar!\n");
-				}else{
-					printf("Esa pelicula no esta en la lista");
-				}
-				}
+			printf("\n¡Gracias por alquilar!\n");
 			break;
 
 	case 3:
@@ -431,20 +407,13 @@ void alquilarPelicula(char usuario[])
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 
-			while(fgets(linea, sizeof(linea), f)){
-				pelicula = strtok(linea, ";");
-				if(strcmp(pelicula, titulo) == 0){
-					printf("\nALQUILER: %s\n=======================================", titulo);
-					printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
-					printf("Cuantos dias quieres alquilar: ");
-					scanf("\n%i", &duracionAlquiler);
-					guardarAlquiler(usuario, titulo, duracionAlquiler);
+			printf("\nALQUILER: %s\n=======================================", titulo);
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
+			scanf("\n%i", &duracionAlquiler);
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
 
-					printf("\n¡Gracias por alquilar!\n");
-				}else{
-					printf("Esa pelicula no esta en la lista");
-				}
-				}
+			printf("\n¡Gracias por alquilar!\n");
 			break;
 	case 4:
 			//Cargar las peliculas CLASICAS
@@ -468,20 +437,13 @@ void alquilarPelicula(char usuario[])
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 			
-			while(fgets(linea, sizeof(linea), f)){
-				pelicula = strtok(linea, ";");
-				if(strcmp(pelicula, titulo) == 0){
-					printf("\nALQUILER: %s\n=======================================", titulo);
-					printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
-					printf("Cuantos dias quieres alquilar: ");
-					scanf("\n%i", &duracionAlquiler);
-					guardarAlquiler(usuario, titulo, duracionAlquiler);
+			printf("\nALQUILER: %s\n=======================================", titulo);
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
+			scanf("\n%i", &duracionAlquiler);
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
 
-					printf("\n¡Gracias por alquilar!\n");
-				}else{
-					printf("Esa pelicula no esta en la lista");
-				}
-				}
+			printf("\n¡Gracias por alquilar!\n");
 			break;
 
 	case 5:
@@ -506,20 +468,13 @@ void alquilarPelicula(char usuario[])
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 
-			while(fgets(linea, sizeof(linea), f)){
-				pelicula = strtok(linea, ";");
-				if(strcmp(pelicula, titulo) == 0){
-					printf("\nALQUILER: %s\n=======================================", titulo);
-					printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
-					printf("Cuantos dias quieres alquilar: ");
-					scanf("\n%i", &duracionAlquiler);
-					guardarAlquiler(usuario, titulo, duracionAlquiler);
+			printf("\nALQUILER: %s\n=======================================", titulo);
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
+			scanf("\n%i", &duracionAlquiler);
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
 
-					printf("\n¡Gracias por alquilar!\n");
-				}else{
-					printf("Esa pelicula no esta en la lista");
-				}
-				}
+			printf("\n¡Gracias por alquilar!\n");
 			break;
 	case 6:
 			//Cargar las peliculas de TERROR
@@ -544,20 +499,13 @@ void alquilarPelicula(char usuario[])
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
 
-			while(fgets(linea, sizeof(linea), f)){
-				pelicula = strtok(linea, ";");
-				if(strcmp(pelicula, titulo) == 0){
-					printf("\nALQUILER: %s\n=======================================", titulo);
-					printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
-					printf("Cuantos dias quieres alquilar: ");
-					scanf("\n%i", &duracionAlquiler);
-					guardarAlquiler(usuario, titulo, duracionAlquiler);
+			printf("\nALQUILER: %s\n=======================================", titulo);
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
+			scanf("\n%i", &duracionAlquiler);
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
 
-					printf("\n¡Gracias por alquilar!\n");
-				}else{
-					printf("Esa pelicula no esta en la lista");
-				}
-				}
+			printf("\n¡Gracias por alquilar!\n");
 
 			break;
 	case 7:
@@ -582,21 +530,13 @@ void alquilarPelicula(char usuario[])
 			
 			printf("\nIntroduce el titulo de la pelicula: ");
 			scanf("\n%s", &titulo);
+			printf("\nALQUILER: %s\n=======================================", titulo);
+			printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
+			printf("Cuantos dias quieres alquilar: ");
+			scanf("\n%i", &duracionAlquiler);
+			guardarAlquiler(usuario, titulo, duracionAlquiler);
 
-			while(fgets(linea, sizeof(linea), f)){
-				pelicula = strtok(linea, ";");
-				if(strcmp(pelicula, titulo) == 0){
-					printf("\nALQUILER: %s\n=======================================", titulo);
-					printf("\n3.Alquilar 3 días: 3 euros\n5.Alquilar 5 días: 4,5 euros\n7.Alquilar 7 días: 6 euros\n");
-					printf("Cuantos dias quieres alquilar: ");
-					scanf("\n%i", &duracionAlquiler);
-					guardarAlquiler(usuario, titulo, duracionAlquiler);
-
-					printf("\n¡Gracias por alquilar!\n");
-				}else{
-					printf("Esa pelicula no esta en la lista");
-				}
-				}
+			printf("\n¡Gracias por alquilar!\n");
 			break;
 
 	default: break;
@@ -674,7 +614,6 @@ void datosUsuario(char usuario[])
 	system("cls");
 	int opcionDatosUsuario;
 	printf("\n=======================================\nDATOS USUARIO\n=======================================\n\n");
-	printf("\nNombre: \nApellido: \nDNI: \nEmail: \nNº Tarjeta: \nGenero(H/M): \nFecha Nacimiento: \nUsuario: \nPuntos: \n");
 	printf("\n¿Que quieres hacer?\n1.Editar informacion\n2.Eliminar Usuario\n3.Volver al Menu\n\nIntroducir opcion: ");
 
 	scanf("%i\n", &opcionDatosUsuario);
@@ -698,11 +637,14 @@ void datosUsuario(char usuario[])
 //FUNCION PARA EDITAR INFORMACION
 void editarInfo(char usuario[])
 {
+	char respuesta[1];
+
 	system("cls");
 	int opcion;
 	printf("\n=======================================\nQUE DATOS QUIERES CAMBIAR\n=======================================\n\n");
 	printf("1.Telefono\n2.Email\n3.Numero de tarjeta\n4.Volver atras\n");
 	printf("Introducir opcion: ");
+	fflush(stdin);
 	scanf("%i", &opcion);
 
 	sqlite3 *db;
@@ -736,14 +678,18 @@ void editarInfo(char usuario[])
 			//CERRAR BASE DE DATOS
 			sqlite3_close(db);
 
-		datosUsuario(usuario);
+		printf("¿Quieres volver atras? Y/N: \n");
+			scanf("%s", &respuesta);
+
+			if(strcmp(respuesta, "Y") == 0){
+			datosUsuario(usuario);};
 		break;
 	
 	case 2:
 		printf("Introduce el email nuevo: ");
 		scanf("%s", &email);
 
-		char sql2[] = "UPDATE usuario SET Telefono = ? WHERE Email = ?";
+		char sql2[] = "UPDATE usuario SET Email = ? WHERE User = ?";
 		sqlite3_prepare_v2(db, sql2, strlen(sql2), &stmt, NULL);
 		sqlite3_bind_text(stmt, 1, email, strlen(email), SQLITE_STATIC);
 		sqlite3_bind_text(stmt, 2, usuario, strlen(usuario), SQLITE_STATIC);
@@ -759,7 +705,11 @@ void editarInfo(char usuario[])
 			//CERRAR BASE DE DATOS
 			sqlite3_close(db);
 
-		datosUsuario(usuario);
+			printf("¿Quieres volver atras? Y/N: \n");
+			scanf("%s", &respuesta);
+
+			if(strcmp(respuesta, "Y") == 0){
+			datosUsuario(usuario);};
 		break;
 	case 3:
 		printf("Introduce el numero de tarjeta nuevo: ");
@@ -781,7 +731,11 @@ void editarInfo(char usuario[])
 			//CERRAR BASE DE DATOS
 			sqlite3_close(db);
 
-		datosUsuario(usuario);
+			printf("¿Quieres volver atras? Y/N: \n");
+			scanf("%s", &respuesta);
+
+			if(strcmp(respuesta, "Y") == 0){
+			datosUsuario(usuario);};
 		break;
 	case 4:
 		//CERRAR BASE DE DATOS
